@@ -1,0 +1,22 @@
+{
+  "extends": ["tslint:recommended"],
+  "defaultSeverity": "warn",
+  "rules": {
+    "arrow-parens": false,
+    "indent": [true, "tabs"],
+    "interface-name": false,
+    "object-literal-sort-keys": false,
+    "only-arrow-functions": false,
+    "quotemark": false,
+    "semicolon": [true, "never"],
+    "space-before-function-paren": false,
+    "trailing-comma": false,
+    "whitespace": [
+      true,
+      "check-branch",
+      "check-decl",
+      "check-operator",
+      "check-type"
+    ]
+  }
+}

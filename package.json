@@ -1,0 +1,22 @@
+{
+  "name": "mithril-helpers",
+  "version": "0.1.0",
+  "description": "Mithril.js Helper Utilities",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "tsc -p src/tsconfig.json",
+    "clean": "rm -f *.js *.d.ts"
+  },
+  "keywords": [
+    "mithril"
+  ],
+  "author": "Mike Linkovich",
+  "license": "ISC",
+  "devDependencies": {
+    "@types/mithril": "^1.1.12",
+    "mithril": "^1.1.6",
+    "tslint": "^5.10.0",
+    "typescript": "^2.8.3"
+  }
+}
