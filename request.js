@@ -14,14 +14,13 @@ var mithril_1 = require("mithril");
  * Errors are thrown only on parse errors or network errors.
  */
 function request(options) {
-    var extractCb = options.extract;
     var xhr;
     function extract(x) {
         xhr = x;
         var text = xhr.responseText;
         var data;
-        if (extractCb) {
-            data = extractCb(xhr, options);
+        if (options.extract) {
+            data = options.extract(xhr, options);
         }
         else {
             if (options.deserialize) {

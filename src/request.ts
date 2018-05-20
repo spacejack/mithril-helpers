@@ -23,15 +23,14 @@ export type Response<T, E> = DataResponse<T> | ErrorResponse<E>
  * Errors are thrown only on parse errors or network errors.
  */
 export default function request<T, E = any> (options: RequestOptions<T>): Promise<Response<T, E>> {
-	const extractCb = options.extract
 	let xhr: XMLHttpRequest
 
 	function extract (x: XMLHttpRequest): T {
 		xhr = x
 		const text = xhr.responseText
 		let data: any
-		if (extractCb) {
-			data = extractCb(xhr, options)
+		if (options.extract) {
+			data = options.extract(xhr, options)
 		} else {
 			if (options.deserialize) {
 				data = options.deserialize(text)
