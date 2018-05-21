@@ -9,23 +9,33 @@ function readyDom(element) {
 }
 exports.readyDom = readyDom;
 /**
- * Assuming the supplied class name triggers a transition, this toggles the class to trigger it.
+ * Assuming the supplied class name or style properties trigger a
+ * transition, this prepares the element then toggles the class or
+ * applies the style(s) to initiate the transition.
  */
-function triggerTransition(element, toggleClass) {
+function triggerTransition(element, toggle) {
     readyDom(element);
-    element.classList.add(toggleClass);
+    if (typeof toggle === 'string') {
+        element.classList.toggle(toggle);
+    }
+    else {
+        Object.assign(element.style, toggle);
+    }
 }
 exports.triggerTransition = triggerTransition;
 /**
  * @param element The element that is transitioning.
- * @param toggleClass If supplied, this function will toggle this class to
- * trigger the transition. Otherwise it is assumed the application has
- * already done so.
+ * @param toggle If supplied, this function will toggle this class or
+ * apply the style properties to trigger the transition. Otherwise
+ * it is assumed the application has already done so.
  * @returns A promise that resolves when the transition ends.
  */
-function transitionPromise(element, toggleClass) {
-    if (toggleClass) {
-        element.classList.toggle(toggleClass);
+function transitionPromise(element, toggle) {
+    if (typeof toggle === 'string') {
+        element.classList.toggle(toggle);
+    }
+    else if (toggle != null) {
+        Object.assign(element.style, toggle);
     }
     return new Promise(function (r) {
         element.addEventListener('transitionend', r);

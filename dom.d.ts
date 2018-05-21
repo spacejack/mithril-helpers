@@ -4,14 +4,16 @@
  */
 export declare function readyDom(element: Element): void;
 /**
- * Assuming the supplied class name triggers a transition, this toggles the class to trigger it.
+ * Assuming the supplied class name or style properties trigger a
+ * transition, this prepares the element then toggles the class or
+ * applies the style(s) to initiate the transition.
  */
-export declare function triggerTransition(element: Element, toggleClass: string): void;
+export declare function triggerTransition(element: Element, toggle: string | Record<string, string | null>): void;
 /**
  * @param element The element that is transitioning.
- * @param toggleClass If supplied, this function will toggle this class to
- * trigger the transition. Otherwise it is assumed the application has
- * already done so.
+ * @param toggle If supplied, this function will toggle this class or
+ * apply the style properties to trigger the transition. Otherwise
+ * it is assumed the application has already done so.
  * @returns A promise that resolves when the transition ends.
  */
-export declare function transitionPromise(element: Element, toggleClass?: string): Promise<Event>;
+export declare function transitionPromise(element: Element, toggle?: string | Record<string, string | null>): Promise<Event>;
