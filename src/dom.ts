@@ -7,6 +7,14 @@ export function readyDom (element: Element) {
 }
 
 /**
+ * Assuming the supplied class name triggers a transition, this toggles the class to trigger it.
+ */
+export function triggerTransition (element: Element, toggleClass: string) {
+	readyDom(element)
+	element.classList.add(toggleClass)
+}
+
+/**
  * @param element The element that is transitioning.
  * @param toggleClass If supplied, this function will toggle this class to
  * trigger the transition. Otherwise it is assumed the application has
