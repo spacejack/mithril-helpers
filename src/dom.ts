@@ -37,3 +37,41 @@ export function transitionPromise (element: Element, toggle?: string | Record<st
 		element.addEventListener('transitionend', r)
 	})
 }
+
+/** A map-like object for environments that don't support Map */
+export interface KeyNavLock {
+	elements: HTMLElement[]
+	tabIndices: number[]
+}
+
+/**
+ * Constrains keyboard navigation to children of the supplied element.
+ * Useful for modal/dialogs.
+ * @returns A lock object that can then be used to restore full keyboard nav.
+ */
+export function lockKeyNav (element: Element) {
+	return (Array.from(document.querySelectorAll(
+		'button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])'
+	)) as HTMLElement[]).filter(
+		el => el.tabIndex != null && el.tabIndex >= 0 && !element.contains(el)
+	).reduce((map, el) => {
+		// Remember previous setting
+		map.elements.push(el)
+		map.tabIndices.push(el.tabIndex)
+		// Set to -1
+		el.tabIndex = -1
+		return map
+	}, {elements: [], tabIndices: []} as KeyNavLock)
+}
+
+/**
+ * Given a lock object returned by lockKeyNav, this will restore
+ * tab indices to all elements that were temporarily disabled.
+ */
+export function unlockKeyNav (lock: KeyNavLock) {
+	for (let i = 0; i < lock.elements.length; ++i) {
+		lock.elements[i].tabIndex = lock.tabIndices[i]
+	}
+	lock.elements = []
+	lock.tabIndices = []
+}

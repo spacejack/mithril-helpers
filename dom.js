@@ -42,3 +42,31 @@ function transitionPromise(element, toggle) {
     });
 }
 exports.transitionPromise = transitionPromise;
+/**
+ * Constrains keyboard navigation to children of the supplied element.
+ * Useful for modal/dialogs.
+ * @returns A lock object that can then be used to restore full keyboard nav.
+ */
+function lockKeyNav(element) {
+    return Array.from(document.querySelectorAll('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])')).filter(function (el) { return el.tabIndex != null && el.tabIndex >= 0 && !element.contains(el); }).reduce(function (map, el) {
+        // Remember previous setting
+        map.elements.push(el);
+        map.tabIndices.push(el.tabIndex);
+        // Set to -1
+        el.tabIndex = -1;
+        return map;
+    }, { elements: [], tabIndices: [] });
+}
+exports.lockKeyNav = lockKeyNav;
+/**
+ * Given a lock object returned by lockKeyNav, this will restore
+ * tab indices to all elements that were temporarily disabled.
+ */
+function unlockKeyNav(lock) {
+    for (var i = 0; i < lock.elements.length; ++i) {
+        lock.elements[i].tabIndex = lock.tabIndices[i];
+    }
+    lock.elements = [];
+    lock.tabIndices = [];
+}
+exports.unlockKeyNav = unlockKeyNav;
